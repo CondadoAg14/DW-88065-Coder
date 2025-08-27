@@ -2,9 +2,9 @@ import React from "react";
 
 function CartWidget() {
   return (
-    <div style={styles.cart}>
+    <div>
       🛒
-      <span style={styles.badge}>3</span>
+      <span>3</span>
     </div>
   );
 }

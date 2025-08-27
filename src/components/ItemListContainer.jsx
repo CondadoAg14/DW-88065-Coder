@@ -2,7 +2,7 @@ import React from "react";
 
 function ItemListContainer({ greeting }) {
   return (
-    <section style={styles.container}>
+    <section>
       <h2>{greeting}</h2>
     </section>
   );
