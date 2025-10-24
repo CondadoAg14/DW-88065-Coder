@@ -1,97 +1,153 @@
-# 🛍️ Proyecto Final - Web App de e-commerce \| React.js
+# 🛍️ E-commerce ReactJS — Proyecto Final
 
-## 📖 Descripción
+Proyecto final desarrollado en **React.js** para el curso de *React (CoderHouse)*.  
+Este e-commerce simula una tienda online con integración a **Firebase Firestore** para persistencia de datos.
 
-Aplicación web de tipo **e-commerce** desarrollada como proyecto final
-del curso **React.js (CoderHouse)**.\
-Permite navegar por un catálogo de productos, ver sus detalles,
-agregarlos al carrito y realizar una compra, registrando la orden en
-Firebase Firestore.
+---
 
-------------------------------------------------------------------------
+## 🚀 Funcionalidades principales
 
-## 🚀 Tecnologías utilizadas
+✅ **Catálogo dinámico:** Los productos se cargan automáticamente desde Firestore.  
+✅ **Detalle de producto:** Vista individual con descripción, precio y selector de cantidad.  
+✅ **Carrito de compras:** Permite agregar, eliminar y vaciar productos.  
+✅ **Total en tiempo real:** Subtotal y total calculados dinámicamente.  
+✅ **Checkout:** Formulario de compra con generación de orden en Firestore.  
+✅ **ID de orden:** Al confirmar, se genera un código único de pedido.  
 
--   **React.js** (Vite)
--   **React Router DOM**
--   **Firebase / Firestore**
--   **Context API** para el manejo global del carrito
--   **CSS** personalizado
+---
 
-------------------------------------------------------------------------
+## ⚙️ Tecnologías utilizadas
 
-## 📂 Estructura principal
+- ⚛️ **React.js** (Vite)
+- 🗃️ **Firebase Firestore**
+- 🧭 **React Router DOM**
+- 💅 **CSS puro**
+- 🧠 **Context API** para manejo global del carrito
 
-    src/
-     ├── components/
-     ├── containers/
-     ├── context/
-     ├── data/
-     ├── App.jsx
-     ├── main.jsx
-     └── index.css
+---
 
-------------------------------------------------------------------------
+## 📁 Estructura principal del proyecto
 
-## ⚙️ Instalación y ejecución
+```
+src/
+│
+├── components/
+│   ├── Item.jsx
+│   ├── ItemList.jsx
+│   ├── ItemDetail.jsx
+│   ├── ItemCount.jsx
+│   ├── CartItem.jsx
+│   ├── CartWidget.jsx
+│
+├── containers/
+│   ├── ItemListContainer.jsx
+│
+├── context/
+│   ├── CartContext.jsx
+│
+├── data/
+│   ├── firebaseConfig.js
+│   ├── productos.js
+│
+├── pages/
+│   ├── Cart.jsx
+│   ├── CheckoutForm.jsx
+│
+├── App.jsx
+├── main.jsx
+├── App.css
+└── index.css
+```
 
-1.  Clonar el repositorio
+---
 
-    ``` bash
-    git clone https://github.com/tuusuario/ProyectoFinal+TuApellido.git
-    cd ProyectoFinal+TuApellido
-    ```
+## 🔥 Instalación y ejecución
 
-2.  Instalar dependencias
+1. Clonar el repositorio:  
+   ```bash
+   git clone https://github.com/tuusuario/ecommerce-react.git
+   cd ecommerce-react
+   ```
 
-    ``` bash
-    npm install
-    ```
+2. Instalar dependencias:  
+   ```bash
+   npm install
+   ```
 
-3.  Ejecutar en modo desarrollo
+3. Configurar Firebase:  
+   - Crear un proyecto en [Firebase Console](https://console.firebase.google.com)  
+   - Copiar las credenciales en `src/data/firebaseConfig.js`  
+   - Habilitar **Firestore Database**
 
-    ``` bash
-    npm run dev
-    ```
+4. Ejecutar la app:  
+   ```bash
+   npm run dev
+   ```
 
-4.  Abrir en el navegador: <http://localhost:5173>
+---
 
-------------------------------------------------------------------------
+## 🧱 Reglas de Firestore (modo desarrollo)
 
-## 💾 Base de datos (Firebase)
+```js
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+```
 
--   Base de datos: **Firestore**
--   Colecciones:
-    -   `productos`: información de cada producto (nombre, precio,
-        imagen, stock, categoría, descripción)
-    -   `orders`: registros de las compras realizadas (buyer, items,
-        total, date)
+---
 
-------------------------------------------------------------------------
+## 🧾 Generación de orden (Checkout)
 
-## 🎨 Funcionalidades principales
+Al confirmar la compra:
+- Se crea un documento en la colección `orders`.
+- Se guarda el comprador, productos, total y fecha.
+- Se muestra el **ID de la orden** al usuario.
 
--   Catálogo de productos dinámico desde Firestore
--   Filtro por categoría
--   Detalle individual del producto
--   Carrito persistente en Context
--   Generación de órdenes con ID de compra
--   Mensajes condicionales (cargando, carrito vacío, sin stock, etc.)
+Ejemplo de documento:
+```json
+{
+  "buyer": {
+    "nombre": "Juan Pérez",
+    "email": "juan@gmail.com",
+    "telefono": "1122334455"
+  },
+  "items": [
+    { "id": "abc1", "nombre": "Remera Negra", "cantidad": 2, "precio": 6500 }
+  ],
+  "total": 13000,
+  "date": "Timestamp"
+}
+```
 
-------------------------------------------------------------------------
+---
 
-## 🌐 Deploy
+## 🌐 Deploy (opcional)
 
-Este proyecto puede ser desplegado fácilmente en: -
-[**Vercel**](https://vercel.com/) -
-[**Netlify**](https://app.netlify.com/)
+Para subirlo online fácilmente:
 
-Ejemplo:\
-👉 <https://mitienda.vercel.app>
+### Con **Vercel**
+1. Crear cuenta en [https://vercel.com](https://vercel.com)
+2. Importar el repositorio desde GitHub.
+3. Vercel detecta automáticamente React (Vite) y genera la build.
+4. Esperar a que compile → ¡tu tienda online estará en línea!
 
-------------------------------------------------------------------------
+### Con **Netlify**
+1. Crear cuenta en [https://www.netlify.com](https://www.netlify.com)
+2. Arrastrar la carpeta `/dist` generada con:
+   ```bash
+   npm run build
+   ```
+3. Netlify la hostea automáticamente.
 
-## 👤 Autor
+---
 
-**CONDADO AGUSTIN**
-\Proyecto Final - React JS\
+## ✨ Autor
+
+👤 **Agustin Condado**  
+📧 agusconda3@gmail.com 
+💼 Curso de ReactJS — CoderHouse (2025)

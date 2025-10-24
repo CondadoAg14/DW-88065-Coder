@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ItemList from "../components/ItemList.jsx";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
 import { db } from "../data/firebaseConfig.js";
+import productosMock from "../data/productos.js"; // ✅ IMPORTANTE
 
 function ItemListContainer({ greeting }) {
   const [items, setItems] = useState([]);
@@ -10,8 +11,23 @@ function ItemListContainer({ greeting }) {
   const { categoryId } = useParams();
 
   useEffect(() => {
+    const cargarProductosSiVacio = async () => {
+      const productosRef = collection(db, "productos");
+      const snapshot = await getDocs(productosRef);
+
+      if (snapshot.empty) {
+        console.log("⚠️ No hay productos en Firestore. Cargando desde productos.js...");
+        for (const prod of productosMock) {
+          await addDoc(productosRef, prod);
+        }
+        console.log("✅ Productos cargados automáticamente en Firestore");
+      }
+    };
+
     const obtenerProductos = async () => {
       try {
+        await cargarProductosSiVacio();
+
         const productosRef = collection(db, "productos");
         const q = categoryId
           ? query(productosRef, where("categoria", "==", categoryId))

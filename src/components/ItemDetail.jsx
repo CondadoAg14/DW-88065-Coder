@@ -21,7 +21,7 @@ function ItemDetail({ producto }) {
       {added ? (
         <p>Producto agregado ✅</p>
       ) : (
-        <ItemCount stock={producto.stock} onAdd={handleAdd} />
+        <ItemCount stock={producto.stock} initial={1} onAdd={handleAdd} />
       )}
     </div>
   );

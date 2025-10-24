@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useCart } from "../context/CartContext.jsx";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../data/firebaseConfig.js";
 
 function CheckoutForm() {
@@ -20,7 +20,7 @@ function CheckoutForm() {
         items: cart,
         total: totalPrice(),
         date: serverTimestamp(), // ✅ fecha generada por Firestore
-      };
+    };
       const docRef = await addDoc(collection(db, "orders"), order);
       setOrderId(docRef.id);
       clearCart();

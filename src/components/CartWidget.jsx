@@ -7,7 +7,10 @@ function CartWidget() {
 
   return (
     <Link to="/cart" className="cart-widget">
-      🛒 {totalItems() > 0 && <span>{totalItems()}</span>}
+      🛒
+      {totalItems() > 0 && (
+        <span className="cart-count">{totalItems()}</span>
+      )}
     </Link>
   );
 }
