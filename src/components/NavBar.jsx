@@ -1,19 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import CartWidget from "./CartWidget.jsx";
 
 function NavBar() {
   return (
-    <nav>
-      <h1>MiTienda</h1>
-      <ul>
-        {/* Ruta al catálogo completo */}
-        <li><Link to="/">Inicio</Link></li>
-
-        {/* Rutas dinámicas de categorías */}
-        <li><Link to="/category/ropa">Ropa</Link></li>
-        <li><Link to="/category/calzado">Calzado</Link></li>
-        <li><Link to="/category/accesorios">Accesorios</Link></li>
+    <nav className="navbar">
+      <NavLink to="/" className="nav-logo">MiTienda</NavLink>
+      <ul className="nav-links">
+        <li><NavLink to="/" end>Inicio</NavLink></li>
+        <li><NavLink to="/categoria/ropa">Ropa</NavLink></li>
+        <li><NavLink to="/categoria/electronica">Electrónica</NavLink></li>
+        <li><NavLink to="/cart">Carrito</NavLink></li>
       </ul>
       <CartWidget />
     </nav>
